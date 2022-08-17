@@ -28,7 +28,7 @@ const categories = [
   },
 ];
 const App = () => {
-  return <Categories categories={categories}/>;
+  return <Categories categories={categories} />;
 };
 
 export default App;
