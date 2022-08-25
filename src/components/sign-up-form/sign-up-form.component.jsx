@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./sign-up-form.styles.scss";
 
 import {
@@ -34,8 +34,8 @@ const SignUpForm = () => {
           email,
           password
         );
+
         user.displayName = displayName;
-        const userDocRef = await createUserDocumentFromAuth(user);
         resetFormFields();
       } catch (error) {
         if (error.code === "auth/email-already-in-use") {
