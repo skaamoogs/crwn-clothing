@@ -1,37 +1,32 @@
 import { createContext, useState } from "react";
 
 const updateCart = (cart, itemToAdd) => {
-  let newCart = cart.slice();
-  let isItemInCart = false;
-  for (let item of newCart) {
-    if (item.id === itemToAdd.id) {
-      isItemInCart = true;
-      item.qty += 1;
-      break;
-    }
+  const existingCartItem = cart.find((item) => item.id === itemToAdd.id);
+  if (existingCartItem) {
+    return cart.map((item) =>
+      item.id === existingCartItem.id ? { ...item, qty: item.qty + 1 } : item
+    );
   }
-  if (!isItemInCart) {
-    itemToAdd.qty = 1;
-    newCart.push(itemToAdd)
-  }
-  return newCart; 
+
+  return [...cart, {...itemToAdd, qty: 1}];
 };
 
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => null,
   items: [],
-  setItems: () => {},
+  addItemToCart: () => {},
 });
 
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const value = { items, setItems, isCartOpen, setIsCartOpen };
 
   const addItemToCart = (itemToAdd) => {
     setItems(updateCart(items, itemToAdd));
   };
+
+  const value = { items, addItemToCart, isCartOpen, setIsCartOpen };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
