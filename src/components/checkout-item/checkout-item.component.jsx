@@ -6,8 +6,13 @@ const CheckoutItem = ({ item }) => {
   const { imageUrl, name, price, qty, id } = item;
   const { changeItemQty } = useContext(CartContext);
 
-  const handleQtyChange = (event) => {
-    const newQty = event.target.id === "inc" ? qty + 1 : event.target.id === "dec" ? qty - 1 : 0
+  const changeItemHandler = (event) => {
+    const newQty =
+      event.target.id === "inc"
+        ? qty + 1
+        : event.target.id === "dec"
+        ? qty - 1
+        : 0;
     changeItemQty(id, newQty);
   };
 
@@ -18,16 +23,18 @@ const CheckoutItem = ({ item }) => {
       </div>
       <span className="name">{name}</span>
       <span className="quantity">
-        <div className="arrow" id="dec" onClick={handleQtyChange}>
-          &lt;
+        <div className="arrow" id="dec" onClick={changeItemHandler}>
+          &#10094;
         </div>
-        <div className="value">{qty}</div>
-        <div className="arrow" id="inc" onClick={handleQtyChange}>
-          &gt;
+        <span className="value">{qty}</span>
+        <div className="arrow" id="inc" onClick={changeItemHandler}>
+          &#10095;
         </div>
       </span>
       <span className="price">{price}</span>
-      <div className="remove-button" onClick={handleQtyChange}>x</div>
+      <div className="remove-button" onClick={changeItemHandler}>
+        &#10005;
+      </div>
     </div>
   );
 };
