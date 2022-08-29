@@ -1,7 +1,7 @@
-.category-name {
-  cursor: pointer;
+h2 {
+  text-align: center;
 }
-.products-container {
+.shop-products-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;

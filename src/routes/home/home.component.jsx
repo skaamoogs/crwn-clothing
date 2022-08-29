@@ -1,6 +1,8 @@
 import Categories from "../../components/categories/categories.component";
 
 const Home = () => {
+
+  
   const categories = [
     {
       id: 1,
