@@ -6,12 +6,16 @@ const mainColor = "black";
 const shrinkLabel = css`
   top: -14px;
   font-size: 12px;
-  color: ${{mainColor}};
+  color: ${ mainColor };
 `;
 
 export const FormInputGroup = styled.div`
   position: relative;
   margin: 45px 0;
+
+  input[type=${(props) => props.type}] {
+    letter-spacing: 0.3em;
+  }
 `;
 
 export const FormInputLabel = styled.label`
@@ -23,11 +27,9 @@ export const FormInputLabel = styled.label`
   left: 5px;
   top: 10px;
   transition: 300ms ease all;
-`;
 
-export const FormInputShrink = styled(FormInputLabel)`
-  ${shrinkLabel}
-`
+  ${({ shrink }) => shrink && shrinkLabel}
+`;
 
 export const FormInputField = styled.input`
   background: none;
@@ -50,7 +52,5 @@ export const FormInputField = styled.input`
     ${shrinkLabel};
   }
 
-  input[type=${props => props.type}] {
-    letter-spacing: 0.3em;
-  }
+
 `;

@@ -5,7 +5,7 @@ export const DirItemBackgroundImg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: url(${props => props.image});
+  background-image: url(${(props => props.image)});
 `;
 
 export const DirectoryItemBody = styled.div`
@@ -44,10 +44,6 @@ export const DirectoryItemContainer = styled.div`
   margin: 0 7.5px 15px;
   overflow: hidden;
 
-  &.large {
-    height: 380px;
-  }
-
   &:first-child {
     margin-right: 7.5px;
   }
@@ -69,19 +65,3 @@ export const DirectoryItemContainer = styled.div`
     opacity: 0.9;
   }
 `;
-
-/* .directory-item-container {
-
-  
-
-  
-
-  
-    .background-image {
-
-    }
-  
-
-    }
-  }
-   */
