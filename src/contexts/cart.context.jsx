@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 const updateCart = (items, itemToAdd) => {
   const existingCartItem = items.find((item) => item.id === itemToAdd.id);
@@ -32,6 +32,7 @@ export const CartContext = createContext({
 
 export const CART_ACTION_TYPES = {
   UPDATE_CART: "UPDATE_CART",
+  SET_IS_CART_OPEN: "SET_IS_CART_OPEN",
 };
 
 const cartReducer = (state, action) => {
@@ -42,6 +43,11 @@ const cartReducer = (state, action) => {
       return {
         ...state,
         ...payload,
+      };
+    case CART_ACTION_TYPES.SET_IS_CART_OPEN:
+      return {
+        ...state,
+        isCartOpen: payload,
       };
     default:
       throw new Error(`Unhandled type ${type} in cartReducer`);
@@ -59,31 +65,38 @@ export const CartProvider = ({ children }) => {
   const [{ items, isCartOpen, itemsCounter, totalPrice }, dispatch] =
     useReducer(cartReducer, INITIAL_STATE);
 
-  const updateCartReducer = (payload) => {
-    dispatch({ type: CART_ACTION_TYPES.UPDATE_CART, payload: payload });
-  };
-
-  useEffect(() => {
-    const newItemsCounter = items.reduce((total, item) => total + item.qty, 0);
-    const newTotalPrice = items.reduce(
+  const updateCartReducer = (newItems) => {
+    const newItemsCounter = newItems.reduce(
+      (total, item) => total + item.qty,
+      0
+    );
+    const newTotalPrice = newItems.reduce(
       (total, item) => total + item.price * item.qty,
       0
     );
-    updateCartReducer({itemsCounter: newItemsCounter, totalPrice: newTotalPrice});
-  }, [items]);
+    dispatch({
+      type: CART_ACTION_TYPES.UPDATE_CART,
+      payload: {
+        items: newItems,
+        itemsCounter: newItemsCounter,
+        totalPrice: newTotalPrice,
+      },
+    });
+  };
+
 
   const addItemToCart = (itemToAdd) => {
-    updateCartReducer({items: updateCart(items, itemToAdd)});
+    updateCartReducer(updateCart(items, itemToAdd));
   };
 
   const changeItemQty = (itemId, newQty) => {
-    updateCartReducer({items: changeItem(items, itemId, newQty)});
+    updateCartReducer(changeItem(items, itemId, newQty));
   };
 
   const setIsCartOpen = (isCartOpen) => {
-    updateCartReducer({isCartOpen: isCartOpen})
-  }
-  
+    dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: isCartOpen });
+  };
+
   const value = {
     items,
     addItemToCart,
