@@ -1,10 +1,20 @@
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
-import { CheckoutImageContainer, CheckoutItemArrow, CheckoutItemContainer, CheckoutItemDetails, CheckoutItemQty, CheckoutItemValue, CheckoutRemoveButton } from "./checkout-item.styles";
+import { useDispatch, useSelector } from "react-redux";
+import { changeItemQty } from "../../store/cart/cart.action";
+import { selectItems } from "../../store/cart/cart.selector";
+import {
+  CheckoutImageContainer,
+  CheckoutItemArrow,
+  CheckoutItemContainer,
+  CheckoutItemDetails,
+  CheckoutItemQty,
+  CheckoutItemValue,
+  CheckoutRemoveButton,
+} from "./checkout-item.styles";
 
 const CheckoutItem = ({ item }) => {
   const { imageUrl, name, price, qty, id } = item;
-  const { changeItemQty } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const items = useSelector(selectItems);
 
   const changeItemHandler = (event) => {
     const newQty =
@@ -13,7 +23,7 @@ const CheckoutItem = ({ item }) => {
         : event.target.id === "dec"
         ? qty - 1
         : 0;
-    changeItemQty(id, newQty);
+    dispatch(changeItemQty(items, id, newQty));
   };
 
   return (
