@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { rootReducer } from "./root.reducer";
 import { persistStore, persistReducer } from "redux-persist";
@@ -11,7 +11,7 @@ const middleWares = [process.env.NODE_ENV === "development" && logger, thunk].fi
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["user"],
+  whitelist: ["cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
