@@ -5,11 +5,12 @@ import {
   CategoryTitle,
 } from "./category-preview.styles";
 
-const CategoryPreview = ({ title, products }) => {
+const CategoryPreview = ({id, title, products }) => {
   return (
     <CategoryPreviewContainer>
-      <CategoryTitle to={title}>{title.toUpperCase()}</CategoryTitle>
+      <CategoryTitle to={id}>{title.toUpperCase()}</CategoryTitle>
       <CategoryPreviewStyle>
+       
         {products.slice(0, 4).map((product) => (
           <ProductCard key={product.id} product={product}></ProductCard>
         ))}

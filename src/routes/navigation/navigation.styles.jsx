@@ -25,5 +25,11 @@ export const NavLinksContainer = styled.div`
 
 export const NavLink = styled(Link)`
   padding: 10px 15px;
+  text-transform: capitalize;
   cursor: pointer;
 `;
+
+export const LanguageContainer = styled.div`
+  padding: 10px 15px;
+  cursor: pointer;
+`

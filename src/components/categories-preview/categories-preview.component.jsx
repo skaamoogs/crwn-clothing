@@ -13,10 +13,10 @@ const CategoriesPreview = () => {
 
   return (
     <Fragment>
-      {isLoading ? <Spinner /> : Object.keys(categoriesMap).map((title) => {
-        const products = categoriesMap[title];
+      {isLoading ? <Spinner /> : Object.keys(categoriesMap).map((id) => {
+        const products = categoriesMap[id];
         return (
-          <CategoryPreview key={title} title={title} products={products} />
+          <CategoryPreview key={id} id={id} title={id} products={products} />
         );
       })}
       

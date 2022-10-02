@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../store/cart/cart.action";
 import { selectItems } from "../../store/cart/cart.selector";
+import { selectCurrentLanguage } from "../../store/language/language.selector";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import {
   ProductCardContainer,
@@ -13,6 +14,7 @@ const ProductCard = ({ product }) => {
   const { name, imageUrl, price } = product;
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
+  const currentLanguage = useSelector(selectCurrentLanguage);
 
   const addToCartHandler = () => {
     dispatch(addItemToCart(items, product));
@@ -29,7 +31,7 @@ const ProductCard = ({ product }) => {
         buttonType={BUTTON_TYPE_CLASSES.inverted}
         onClick={addToCartHandler}
       >
-        Add to Cart
+        {currentLanguage ? "Добавить в корзину" : "Add to Cart"}
       </Button>
     </ProductCardContainer>
   );

@@ -3,8 +3,9 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import { SignUpContainer } from "./sign-up-form.styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpStart } from "../../store/user/user.action";
+import { selectCurrentLanguage } from "../../store/language/language.selector";
 
 const defaultFormFields = {
   displayName: "",
@@ -17,6 +18,7 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+  const currentLanguage = useSelector(selectCurrentLanguage);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -40,11 +42,15 @@ const SignUpForm = () => {
 
   return (
     <SignUpContainer>
-      <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h2>{currentLanguage ? "Нет аккаунта?" : "Don't have an account?"}</h2>
+      <span>
+        {currentLanguage
+          ? "Зарегистрироваться с помощью электронной почты"
+          : "Sign up with your email and password"}
+      </span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label="Display Name"
+          label={currentLanguage ? "Имя" : "Display Name"}
           type="text"
           required
           onChange={handleChange}
@@ -52,7 +58,7 @@ const SignUpForm = () => {
           value={displayName}
         />
         <FormInput
-          label="Email"
+          label={currentLanguage ? "Эл. почта" : "Email"}
           type="email"
           required
           onChange={handleChange}
@@ -60,7 +66,7 @@ const SignUpForm = () => {
           value={email}
         />
         <FormInput
-          label="Password"
+          label={currentLanguage ? "Пароль" : "Password"}
           type="password"
           required
           onChange={handleChange}
@@ -68,15 +74,16 @@ const SignUpForm = () => {
           value={password}
         />
         <FormInput
-          label="Confirm Password"
+          label={currentLanguage ? "Подтвердить пароль" : "Confirm Password"}
           type="password"
           required
           onChange={handleChange}
           name="confirmPassword"
           value={confirmPassword}
         />
-
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit">
+          {currentLanguage ? "Зарегистрироваться" : "Sign Up"}
+        </Button>
       </form>
     </SignUpContainer>
   );

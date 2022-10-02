@@ -1,0 +1,3 @@
+export const LANGUAGE_ACTION_TYPES = {
+  SET_LANGUAGE: "SET_LANGUAGE",
+};

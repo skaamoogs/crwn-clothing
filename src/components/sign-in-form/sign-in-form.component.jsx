@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
-import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   emailSignInStart,
   googleSignInStart,
 } from "../../store/user/user.action";
+import { selectCurrentLanguage } from "../../store/language/language.selector";
 
 const defaultFormFields = {
   email: "",
@@ -19,6 +19,7 @@ const SignInForm = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const currentLanguage = useSelector(selectCurrentLanguage);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -41,11 +42,17 @@ const SignInForm = () => {
 
   return (
     <SignInContainer>
-      <h2>Already have an account?</h2>
-      <span>Sign in with your email and password</span>
+      <h2>
+        {currentLanguage ? "Уже есть аккаунт?" : "Already have an account?"}
+      </h2>
+      <span>
+        {currentLanguage
+          ? "Войти по электронной почте и паролю"
+          : "Sign in with your email and password"}
+      </span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label="Email"
+          label={currentLanguage ? "Электронная почта" : "Email"}
           type="email"
           required
           onChange={handleChange}
@@ -53,7 +60,7 @@ const SignInForm = () => {
           value={email}
         />
         <FormInput
-          label="Password"
+          label={currentLanguage ? "Пароль" : "Password"}
           type="password"
           required
           onChange={handleChange}
@@ -61,13 +68,13 @@ const SignInForm = () => {
           value={password}
         />
         <ButtonsContainer>
-          <Button type="submit">Sign In</Button>
+          <Button type="submit">{currentLanguage ? "Войти" : "Sign In"}</Button>
           <Button
             type="button"
             buttonType={BUTTON_TYPE_CLASSES.google}
             onClick={logGoogleUser}
           >
-            Sign In With Google
+            {currentLanguage ? "Войти с Google":"Sign In With Google"}
           </Button>
         </ButtonsContainer>
       </form>
