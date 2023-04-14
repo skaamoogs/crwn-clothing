@@ -39,4 +39,4 @@ https://user-images.githubusercontent.com/94950998/232061420-c92251dd-64b2-435b-
 
 ## Деплой
 
-Приложение развернуто на сервисе `netlify. Перейдите по ссылке https://clothing-online-store.netlify.app/
+Приложение развернуто на сервисе `netlify`. Перейдите по ссылке https://clothing-online-store.netlify.app/
